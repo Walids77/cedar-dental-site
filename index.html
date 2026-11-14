@@ -1,0 +1,232 @@
+<!doctype html>
+<!-- Cedar Dental Clinic - home page (demo clinic).
+     Facts (prices, dentists, hours) are copied from AI-103/clinic-docs so the website and the AI agent say the same thing.
+     Google also needs this page as the "Application home page" on the OAuth Branding page. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cedar Dental Clinic</title>
+  <link rel="icon" href="logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #1e5a37;      /* logo green */
+      --green-dark: #143d26;
+      --sage: #7fa58a;
+      --mint: #eef4ef;
+      --paper: #fbfbf8;
+      --ink: #1d2a22;
+      --muted: #5b6b61;
+      --line: #dfe7e1;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; color: var(--ink); background: var(--paper); line-height: 1.6; }
+    h1, h2, h3 { font-family: Fraunces, Georgia, serif; color: var(--green-dark); line-height: 1.2; margin: 0 0 .5em; }
+    a { color: var(--green); }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 72px 0; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 600; color: var(--sage); margin-bottom: 8px; }
+
+    /* Top bar */
+    header { position: sticky; top: 0; z-index: 10; background: rgba(251,251,248,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .bar { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-family: Fraunces, serif; font-size: 1.25rem; color: var(--green-dark); font-weight: 600; }
+    .brand img { width: 48px; height: 48px; mix-blend-mode: multiply; } /* multiply hides the logo's paper background */
+    nav a { margin-left: 24px; text-decoration: none; color: var(--muted); font-weight: 500; }
+    nav a:hover { color: var(--green); }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-weight: 600; text-decoration: none; border: 2px solid var(--green); }
+    .btn-main { background: var(--green); color: #fff; }
+    .btn-main:hover { background: var(--green-dark); }
+    .btn-ghost { color: var(--green); background: transparent; }
+    .soon { font-size: .72rem; background: var(--mint); color: var(--green); padding: 2px 8px; border-radius: 999px; }
+
+    /* Hero */
+    .hero { padding: 64px 0 80px; background: linear-gradient(180deg, var(--mint), var(--paper)); }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+    .hero h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+    .hero p.lead { font-size: 1.15rem; color: var(--muted); max-width: 34em; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .facts { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; color: var(--muted); font-size: .95rem; }
+    .facts strong { display: block; color: var(--green-dark); font-size: 1.05rem; }
+    /* Picture slot: today the logo; later swap logo.jpg for a clinic photo or a smiling patient (hero.jpg) */
+    .hero-pic { aspect-ratio: 4 / 3; border-radius: 32px; box-shadow: 0 30px 60px -30px rgba(20,61,38,.35); overflow: hidden; }
+    .hero-pic img { width: 100%; height: 100%; object-fit: cover; display: block; } /* photo fills the rounded frame */
+
+    /* Cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 32px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
+    .card h3 { font-size: 1.2rem; }
+    .price-list { list-style: none; padding: 0; margin: 0; }
+    .price-list li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: .95rem; }
+    .price-list li:last-child { border-bottom: 0; }
+    .price-list span:last-child { font-weight: 600; color: var(--green); white-space: nowrap; }
+    .note { color: var(--muted); font-size: .9rem; margin-top: 20px; }
+
+    .dentist .days { display: inline-block; margin-top: 8px; font-size: .85rem; background: var(--mint); color: var(--green); padding: 4px 12px; border-radius: 999px; }
+
+    /* How booking works */
+    .steps { counter-reset: s; }
+    .steps .card::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--green); color: #fff; font-weight: 600; margin-bottom: 12px; }
+
+    .alt { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    td:last-child { text-align: right; font-weight: 500; }
+
+    footer { background: var(--green-dark); color: #cfe0d4; padding: 40px 0; font-size: .92rem; }
+    footer a { color: #fff; }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+
+    @media (max-width: 860px) {
+      .hero-grid, .two { grid-template-columns: 1fr; }
+      .hero-pic { max-width: 380px; margin: 0 auto; }
+      nav { display: none; }
+      section { padding: 56px 0; }
+      .wrap { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#"><img src="logo.jpg" alt="">Cedar Dental Clinic</a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#dentists">Dentists</a>
+      <a href="#visit">Visit us</a>
+      <a href="#book">Book</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 1. Hero -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Professional oral health · Jounieh</div>
+      <h1>A healthy smile, booked in a minute.</h1>
+      <p class="lead">Check-ups, cleaning, whitening, implants and braces with three experienced dentists.
+        Book, move or cancel your visit any time by chatting with our booking assistant.</p>
+      <div class="actions">
+        <!-- Door 1: WhatsApp (link goes live in step L4) -->
+        <a class="btn btn-main" href="#book">Book on WhatsApp</a>
+        <!-- Door 2: website chat (a later step) -->
+        <a class="btn btn-ghost" href="#book">Chat on this site <span class="soon">soon</span></a>
+      </div>
+      <div class="facts">
+        <div><strong>Mon – Fri</strong>10:00 – 16:00</div>
+        <div><strong>3 dentists</strong>Arabic · English · French</div>
+        <div><strong>Free parking</strong>behind the building</div>
+      </div>
+    </div>
+    <div class="hero-pic"><img src="hero.jpg" alt="Treatment room at Cedar Dental Clinic"></div>
+  </div>
+</section>
+
+<!-- 2. Services and prices (from 01-services-and-prices.docx) -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">Services</div>
+    <h2>Clear prices, no surprises</h2>
+    <div class="grid">
+      <div class="card"><h3>Check-ups &amp; cleaning</h3>
+        <ul class="price-list">
+          <li><span>Check-up &amp; consultation</span><span>$30</span></li>
+          <li><span>Scaling &amp; polishing</span><span>$50</span></li>
+          <li><span>Children's check-up + fluoride</span><span>$30</span></li>
+          <li><span>Small X-ray</span><span>$10</span></li>
+          <li><span>Panoramic X-ray (full mouth)</span><span>$35</span></li>
+        </ul></div>
+      <div class="card"><h3>Fillings &amp; root canals</h3>
+        <ul class="price-list">
+          <li><span>White filling</span><span>from $60</span></li>
+          <li><span>Root canal, front tooth</span><span>from $120</span></li>
+          <li><span>Root canal, molar</span><span>from $180</span></li>
+          <li><span>Simple extraction</span><span>$50</span></li>
+          <li><span>Wisdom tooth surgery</span><span>from $150</span></li>
+        </ul></div>
+      <div class="card"><h3>Cosmetic</h3>
+        <ul class="price-list">
+          <li><span>Whitening (1 hour)</span><span>$280</span></li>
+          <li><span>Porcelain veneer</span><span>from $320</span></li>
+          <li><span>Zirconia crown</span><span>from $400</span></li>
+        </ul></div>
+      <div class="card"><h3>Implants &amp; braces</h3>
+        <ul class="price-list">
+          <li><span>Implant consultation + 3D scan*</span><span>$50</span></li>
+          <li><span>Implant only</span><span>from $800</span></li>
+          <li><span>Implant with crown</span><span>from $1,200</span></li>
+          <li><span>Orthodontic consultation</span><span>$40</span></li>
+          <li><span>Metal braces</span><span>from $1,500</span></li>
+          <li><span>Clear aligners</span><span>from $2,500</span></li>
+        </ul></div>
+    </div>
+    <p class="note">Prices in US dollars. Final price confirmed by the dentist after the check-up. Treatments above $500 can be paid in up to 3 instalments.<br>* The 3D scan fee is deducted from the implant price if you go ahead.<br>We accept cash (US dollars, or Lebanese pounds at the daily rate) and cards. We do not bill insurance directly: you get a stamped receipt and treatment report to claim from your insurer.</p>
+  </div>
+</section>
+
+<!-- 3. Dentists (from 02-hours-and-dentists.docx) -->
+<section id="dentists" class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Our team</div>
+    <h2>Meet your dentists</h2>
+    <div class="grid">
+      <div class="card dentist"><h3>Dr. Rana Haddad</h3>General dentist: check-ups, cleaning, fillings, root canals, whitening.<br><span class="days">Mon · Wed · Fri</span></div>
+      <div class="card dentist"><h3>Dr. Karim Nassar</h3>Implants and oral surgery: implants, wisdom teeth, crowns and bridges.<br><span class="days">Tue · Thu</span></div>
+      <div class="card dentist"><h3>Dr. Lina Khoury</h3>Children's dentist and braces, for kids from 3 years old.<br><span class="days">Mon · Thu</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. How booking works -->
+<section id="book">
+  <div class="wrap">
+    <div class="eyebrow">Booking</div>
+    <h2>How booking works</h2>
+    <div class="grid steps">
+      <div class="card"><h3>Message us</h3>Tell the assistant the day you want. It checks the clinic diary and shows the free times.</div>
+      <div class="card"><h3>Confirm</h3>Give your full name, phone and email, then say yes. Nothing is booked until you confirm.</div>
+      <div class="card"><h3>Get your invite</h3>The visit goes into our calendar and you receive a calendar invite by email.</div>
+    </div>
+    <p class="note">The assistant handles bookings and clinic information only. It never gives medical advice. Please cancel at least 24 hours before your visit.</p>
+  </div>
+</section>
+
+<!-- 5. Visit us -->
+<section id="visit" class="alt">
+  <div class="wrap two">
+    <div>
+      <div class="eyebrow">Visit us</div>
+      <h2>Opening hours</h2>
+      <table>
+        <tr><td>Monday – Friday</td><td>10:00 – 16:00</td></tr>
+        <tr><td>Last appointment</td><td>15:30</td></tr>
+        <tr><td>Saturday, Sunday, public holidays</td><td>Closed</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="eyebrow">&nbsp;</div>
+      <h2>Find us</h2>
+      <p>2nd floor, Cedar Building, Main Street, Jounieh, Lebanon.<br>Free parking behind the building. Lift available.</p>
+      <p>Phone: 09-123456 (demo number)</p>
+      <p class="note">Emergency with heavy bleeding, face swelling or difficulty breathing: go to the nearest hospital or call the Red Cross on 140.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 Cedar Dental Clinic · <a href="privacy.html">Privacy policy</a></div>
+    <div>This is a demonstration clinic used to build and test an AI booking assistant.</div>
+  </div>
+</footer>
+
+</body>
+</html>
